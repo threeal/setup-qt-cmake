@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.19)
 
 project(
-  MyMkdir
+  SetupQt
   VERSION 0.0.0
-  DESCRIPTION "A starter CMake package for creating directories recursively"
-  HOMEPAGE_URL https://github.com/threeal/cmake-starter
+  DESCRIPTION "Setup Qt from your CMake project"
+  HOMEPAGE_URL https://github.com/threeal/setup-qt-cmake
   LANGUAGES NONE
 )
 
@@ -25,15 +25,15 @@ if(NOT SUBPROJECT)
 
   include(CMakePackageConfigHelpers)
   write_basic_package_version_file(
-    MyMkdirConfigVersion.cmake
+    SetupQtConfigVersion.cmake
     COMPATIBILITY SameMajorVersion
   )
 
   install(
     FILES
       cmake/MkdirRecursive.cmake
-      cmake/MyMkdirConfig.cmake
-      ${CMAKE_CURRENT_BINARY_DIR}/MyMkdirConfigVersion.cmake
-    DESTINATION lib/cmake/MyMkdir
+      cmake/SetupQtConfig.cmake
+      ${CMAKE_CURRENT_BINARY_DIR}/SetupQtConfigVersion.cmake
+    DESTINATION lib/cmake/SetupQt
   )
 endif()
