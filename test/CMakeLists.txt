@@ -11,6 +11,12 @@ function(add_cmake_test FILE)
 endfunction()
 
 add_cmake_test(
+  BuildExampleTest.cmake
+  "Build analogclock example"
+  # Add more test cases here.
+)
+
+add_cmake_test(
   MkdirRecursiveTest.cmake
   "Create directory recursively"
   # Add more test cases here.
