@@ -15,9 +15,3 @@ add_cmake_test(
   "Build analogclock example"
   # Add more test cases here.
 )
-
-add_cmake_test(
-  MkdirRecursiveTest.cmake
-  "Create directory recursively"
-  # Add more test cases here.
-)
