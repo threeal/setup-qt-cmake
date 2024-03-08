@@ -21,6 +21,7 @@ jobs:
         with:
           version: 6.2.4
           dir: ${{ github.workspace }}
+          cache: true
           examples: true
 
       - name: Configure Project
