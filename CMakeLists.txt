@@ -31,7 +31,7 @@ if(NOT SUBPROJECT)
 
   install(
     FILES
-      cmake/MkdirRecursive.cmake
+      cmake/SetupQt.cmake
       cmake/SetupQtConfig.cmake
       ${CMAKE_CURRENT_BINARY_DIR}/SetupQtConfigVersion.cmake
     DESTINATION lib/cmake/SetupQt
