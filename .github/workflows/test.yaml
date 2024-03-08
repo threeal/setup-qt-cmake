@@ -22,7 +22,6 @@ jobs:
           version: 6.2.4
           dir: ${{ github.workspace }}
           cache: true
-          examples: true
 
       - name: Configure Project
         uses: threeal/cmake-action@v1.3.0
