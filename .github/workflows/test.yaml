@@ -20,9 +20,7 @@ jobs:
         uses: jurplel/install-qt-action@v3.3.0
         with:
           version: 6.2.4
-          dir: ${{ github.workspace }}
           cache: true
-          examples: true
 
       - name: Configure Project
         uses: threeal/cmake-action@v1.3.0
@@ -31,5 +29,3 @@ jobs:
 
       - name: Test Project
         run: ctest -C debug --output-on-failure --test-dir build --no-tests=error
-        env:
-          HOME: ${{ github.workspace }}
