@@ -1,3 +1,6 @@
+# This code is licensed under the terms of the MIT License.
+# Copyright (c) 2024 Alfi Maulana
+
 include_guard(GLOBAL)
 
 # Downloads the Qt online installer to a build directory.
