@@ -11,11 +11,11 @@ function(add_cmake_test FILE)
 endfunction()
 
 add_cmake_test(
-  BuildExampleTest.cmake
+  cmake/BuildExampleTest.cmake
   "Build analogclock example"
 )
 
 add_cmake_test(
-  SetupQtTest.cmake
+  cmake/SetupQtTest.cmake
   "Download Qt online installer"
 )
