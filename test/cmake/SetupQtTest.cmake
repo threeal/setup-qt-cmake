@@ -17,7 +17,7 @@ if("Download Qt online installer" MATCHES ${TEST_MATCHES})
   endif()
 endif()
 
-if("Attach Qt online installer" MATCHES ${TEST_MATCHES})
+if("Attach and detach Qt online installer" MATCHES ${TEST_MATCHES})
   math(EXPR TEST_COUNT "${TEST_COUNT} + 1")
 
   _attach_qt_online_installer()
@@ -32,6 +32,12 @@ if("Attach Qt online installer" MATCHES ${TEST_MATCHES})
     if(DEFINED QT_ONLINE_INSTALLER_VOLUME_PATH)
       message(FATAL_ERROR "The 'QT_ONLINE_INSTALLER_VOLUME_PATH' variable should not be defined")
     endif()
+  endif()
+
+  _detach_qt_online_installer()
+
+  if(DEFINED QT_ONLINE_INSTALLER_VOLUME_PATH)
+    message(FATAL_ERROR "The 'QT_ONLINE_INSTALLER_VOLUME_PATH' variable should not be defined")
   endif()
 endif()
 

@@ -18,5 +18,5 @@ add_cmake_test(
 add_cmake_test(
   cmake/SetupQtTest.cmake
   "Download Qt online installer"
-  "Attach Qt online installer"
+  "Attach and detach Qt online installer"
 )
