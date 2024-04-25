@@ -62,3 +62,30 @@ function(_attach_qt_online_installer)
     set(QT_ONLINE_INSTALLER_VOLUME_PATH ${QT_ONLINE_INSTALLER_VOLUME_PATH} PARENT_SCOPE)
   endif()
 endfunction()
+
+# Detaches the Qt online installer image from the volume.
+#
+# This function detaches the Qt online installer DMG image from the volume.
+# It unsets the `QT_ONLINE_INSTALLER_VOLUME_PATH` variable.
+#
+# This function does not do anything if the DMG image was not previously attached.
+function(_detach_qt_online_installer)
+  if(DEFINED QT_ONLINE_INSTALLER_VOLUME_PATH)
+    if(EXISTS ${QT_ONLINE_INSTALLER_VOLUME_PATH})
+      find_program(HDIUTIL_PROGRAM hdiutil)
+      if(HDIUTIL_PROGRAM STREQUAL HDIUTIL_PROGRAM-NOTFOUND)
+        message(FATAL_ERROR "Could not find the 'hdiutil' program required to detach the Qt online installer")
+      endif()
+
+      execute_process(
+        COMMAND ${HDIUTIL_PROGRAM} detach ${QT_ONLINE_INSTALLER_VOLUME_PATH}
+        RESULT_VARIABLE RES
+      )
+      if(NOT RES EQUAL 0)
+        message(FATAL_ERROR "Failed to detach the Qt online installer image from '${QT_ONLINE_INSTALLER_VOLUME_PATH}' (${RES})")
+      endif()
+    endif()
+
+    unset(QT_ONLINE_INSTALLER_VOLUME_PATH PARENT_SCOPE)
+  endif()
+endfunction()
