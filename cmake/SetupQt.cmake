@@ -31,9 +31,11 @@ endfunction()
 # Attaches the Qt online installer image to a new volume.
 #
 # This function attaches the Qt online installer DMG image to a new volume.
-# It sets the `QT_ONLINE_INSTALLER_VOLUME_PATH` variable to the location of the attached Qt online installer volume.
+# It sets the `QT_ONLINE_INSTALLER_VOLUME_PATH` variable to the location of the attached Qt online installer volume
+# and sets the `QT_ONLINE_INSTALLER_PROGRAM` variable to the location of the Qt online installer executable.
 #
-# This function does not do anything if the Qt online installer is not a DMG image.
+# This function does not do anything if the Qt online installer is not a DMG image,
+# but it still sets the `QT_ONLINE_INSTALLER_PROGRAM` variable.
 function(_attach_qt_online_installer)
   if(NOT DEFINED QT_ONLINE_INSTALLER_PATH)
     _download_qt_online_installer()
@@ -60,13 +62,21 @@ function(_attach_qt_online_installer)
     endif()
 
     set(QT_ONLINE_INSTALLER_VOLUME_PATH ${QT_ONLINE_INSTALLER_VOLUME_PATH} PARENT_SCOPE)
+
+    set(
+      QT_ONLINE_INSTALLER_PROGRAM
+      ${QT_ONLINE_INSTALLER_VOLUME_PATH}/${QT_ONLINE_INSTALLER_NAME_WLE}.app/Contents/MacOS/${QT_ONLINE_INSTALLER_NAME_WLE}
+      PARENT_SCOPE
+    )
+  else()
+    set(QT_ONLINE_INSTALLER_PROGRAM ${QT_ONLINE_INSTALLER_PATH} PARENT_SCOPE)
   endif()
 endfunction()
 
 # Detaches the Qt online installer image from the volume.
 #
 # This function detaches the Qt online installer DMG image from the volume.
-# It unsets the `QT_ONLINE_INSTALLER_VOLUME_PATH` variable.
+# It unsets the `QT_ONLINE_INSTALLER_VOLUME_PATH` and `QT_ONLINE_INSTALLER_PROGRAM` variables.
 #
 # This function does not do anything if the DMG image was not previously attached.
 function(_detach_qt_online_installer)
@@ -88,4 +98,6 @@ function(_detach_qt_online_installer)
 
     unset(QT_ONLINE_INSTALLER_VOLUME_PATH PARENT_SCOPE)
   endif()
+
+  unset(QT_ONLINE_INSTALLER_PROGRAM PARENT_SCOPE)
 endfunction()
