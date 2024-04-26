@@ -44,6 +44,8 @@ if("Attach and detach Qt online installer" MATCHES ${TEST_MATCHES})
 
   if(DEFINED QT_ONLINE_INSTALLER_VOLUME_PATH)
     message(FATAL_ERROR "The 'QT_ONLINE_INSTALLER_VOLUME_PATH' variable should not be defined")
+  elseif(DEFINED QT_ONLINE_INSTALLER_PROGRAM)
+    message(FATAL_ERROR "The 'QT_ONLINE_INSTALLER_PROGRAM' variable should not be defined")
   endif()
 endif()
 

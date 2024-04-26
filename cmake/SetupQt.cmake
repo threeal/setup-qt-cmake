@@ -76,7 +76,7 @@ endfunction()
 # Detaches the Qt online installer image from the volume.
 #
 # This function detaches the Qt online installer DMG image from the volume.
-# It unsets the `QT_ONLINE_INSTALLER_VOLUME_PATH` variable.
+# It unsets the `QT_ONLINE_INSTALLER_VOLUME_PATH` and `QT_ONLINE_INSTALLER_PROGRAM` variables.
 #
 # This function does not do anything if the DMG image was not previously attached.
 function(_detach_qt_online_installer)
@@ -98,4 +98,6 @@ function(_detach_qt_online_installer)
 
     unset(QT_ONLINE_INSTALLER_VOLUME_PATH PARENT_SCOPE)
   endif()
+
+  unset(QT_ONLINE_INSTALLER_PROGRAM PARENT_SCOPE)
 endfunction()
