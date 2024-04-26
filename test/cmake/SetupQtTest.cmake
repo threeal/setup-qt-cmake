@@ -34,6 +34,12 @@ if("Attach and detach Qt online installer" MATCHES ${TEST_MATCHES})
     endif()
   endif()
 
+  if(NOT DEFINED QT_ONLINE_INSTALLER_PROGRAM)
+    message(FATAL_ERROR "The 'QT_ONLINE_INSTALLER_PROGRAM' variable should be defined")
+  elseif(NOT EXISTS ${QT_ONLINE_INSTALLER_PROGRAM})
+    message(FATAL_ERROR "The installer program does not exist at '${QT_ONLINE_INSTALLER_PROGRAM}'")
+  endif()
+
   _detach_qt_online_installer()
 
   if(DEFINED QT_ONLINE_INSTALLER_VOLUME_PATH)
