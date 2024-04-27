@@ -4,7 +4,10 @@
 include_guard(GLOBAL)
 
 # Downloads the Qt online installer to a build directory.
-# This function outputs a `QT_ONLINE_INSTALLER_PATH` variable indicating the location of the downloaded installer.
+#
+# If the downloaded file is a DMG image, this function will set the 'QT_ONLINE_INSTALLER_IMAGE' variable to the
+# location of the DMG image; otherwise, it will set the 'QT_ONLINE_INSTALLER_PROGRAM' variable to the location
+# of the Qt online installer program.
 function(_download_qt_online_installer)
   if(CMAKE_SYSTEM_NAME STREQUAL Windows)
     set(INSTALLER_NAME qt-unified-windows-x64-4.7.0-online.exe)
@@ -28,14 +31,15 @@ function(_download_qt_online_installer)
   )
 
   get_filename_component(INSTALLER_LAST_EXT ${INSTALLER_PATH} LAST_EXT)
-  if(INSTALLER_LAST_EXT STREQUAL .run)
+  if(INSTALLER_LAST_EXT STREQUAL .dmg)
+    set(QT_ONLINE_INSTALLER_IMAGE ${INSTALLER_PATH} PARENT_SCOPE)
+  else()
     file(
       CHMOD ${INSTALLER_PATH}
       PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
     )
+    set(QT_ONLINE_INSTALLER_PROGRAM ${INSTALLER_PATH} PARENT_SCOPE)
   endif()
-
-  set(QT_ONLINE_INSTALLER_PATH ${INSTALLER_PATH} PARENT_SCOPE)
 endfunction()
 
 # Attaches the Qt online installer image to a new volume.
