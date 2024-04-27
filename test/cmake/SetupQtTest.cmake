@@ -40,6 +40,14 @@ if("Attach and detach Qt online installer" MATCHES ${TEST_MATCHES})
     message(FATAL_ERROR "The installer program does not exist at '${QT_ONLINE_INSTALLER_PROGRAM}'")
   endif()
 
+  execute_process(
+    COMMAND ${QT_ONLINE_INSTALLER_PROGRAM} --version
+    RESULT_VARIABLE RES
+  )
+  if(NOT RES EQUAL 0)
+    message(FATAL_ERROR "Failed to execute the installer program: ${RES}")
+  endif()
+
   _detach_qt_online_installer()
 
   if(DEFINED QT_ONLINE_INSTALLER_VOLUME_PATH)
