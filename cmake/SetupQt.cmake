@@ -21,7 +21,7 @@ function(_download_qt_online_installer)
   else()
     message(FATAL_ERROR "Unsupported system to download the Qt online installer: ${CMAKE_SYSTEM_NAME}")
   endif()
-  set(INSTALLER_PATH ${CMAKE_BINARY_DIR}/_deps/${INSTALLER_NAME})
+  set(INSTALLER_PATH ${CMAKE_SOURCE_DIR}/.deps/${INSTALLER_NAME})
 
   file(
     DOWNLOAD
