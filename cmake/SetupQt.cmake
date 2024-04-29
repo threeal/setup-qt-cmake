@@ -111,3 +111,39 @@ function(_detach_qt_online_installer)
     unset(QT_ONLINE_INSTALLER_PROGRAM PARENT_SCOPE)
   endif()
 endfunction()
+
+# Sets up the latest version of the Qt framework.
+function(setup_qt)
+  _download_qt_online_installer()
+  if(DEFINED QT_ONLINE_INSTALLER_IMAGE)
+    _attach_qt_online_installer()
+  endif()
+
+  if(CMAKE_SYSTEM_NAME STREQUAL Windows)
+    set(QT_NAME qt.qt6.653.win64_msvc2019_64)
+  elseif(CMAKE_SYSTEM_NAME STREQUAL Darwin)
+    set(QT_NAME qt.qt6.653.clang_64)
+  elseif(CMAKE_SYSTEM_NAME STREQUAL Linux)
+    set(QT_NAME qt.qt6.653.gcc_64)
+  else()
+    message(FATAL_ERROR "Unsupported system to set up the Qt framework: ${CMAKE_SYSTEM_NAME}")
+  endif()
+
+  execute_process(
+    COMMAND ${QT_ONLINE_INSTALLER_PROGRAM}
+      --root ${CMAKE_BINARY_DIR}/_deps/qt
+      --accept-licenses
+      --accept-obligations
+      --default-answer
+      --confirm-command
+      install ${QT_NAME}
+    RESULT_VARIABLE RES
+  )
+  if(NOT RES EQUAL 0)
+    message(FATAL_ERROR "Failed to set up the latest Qt framework (${RES})")
+  endif()
+
+  if(DEFINED QT_ONLINE_INSTALLER_VOLUME)
+    _detach_qt_online_installer()
+  endif()
+endfunction()
