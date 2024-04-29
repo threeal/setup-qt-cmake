@@ -31,3 +31,5 @@ jobs:
         uses: threeal/ctest-action@v1.0.0
         with:
           build-config: debug
+        env:
+          QT_INSTALLER_JWT_TOKEN: ${{ secrets.QT_INSTALLER_JWT_TOKEN }}
