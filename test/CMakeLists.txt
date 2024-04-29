@@ -21,4 +21,5 @@ add_cmake_test(
   "Download Qt online installer"
   "Attach and detach Qt online installer"
   "Execute Qt online installer"
+  "Set up the latest version of Qt"
 )

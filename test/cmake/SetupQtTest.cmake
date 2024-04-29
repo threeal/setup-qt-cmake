@@ -70,7 +70,6 @@ if("Attach and detach Qt online installer" MATCHES ${TEST_MATCHES})
   endif()
 endif()
 
-
 if("Execute Qt online installer" MATCHES ${TEST_MATCHES})
   math(EXPR TEST_COUNT "${TEST_COUNT} + 1")
 
@@ -96,6 +95,12 @@ if("Execute Qt online installer" MATCHES ${TEST_MATCHES})
   if(DEFINED QT_ONLINE_INSTALLER_VOLUME)
     _detach_qt_online_installer()
   endif()
+endif()
+
+if("Set up the latest version of Qt" MATCHES ${TEST_MATCHES})
+  math(EXPR TEST_COUNT "${TEST_COUNT} + 1")
+
+  setup_qt()
 endif()
 
 if(TEST_COUNT LESS_EQUAL 0)
