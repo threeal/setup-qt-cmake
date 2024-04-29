@@ -55,14 +55,6 @@ if("Attach and detach Qt online installer" MATCHES ${TEST_MATCHES})
     message(FATAL_ERROR "The installer program should exist at '${QT_ONLINE_INSTALLER_PROGRAM}'")
   endif()
 
-  execute_process(
-    COMMAND ${QT_ONLINE_INSTALLER_PROGRAM} --version
-    RESULT_VARIABLE RES
-  )
-  if(NOT RES EQUAL 0)
-    message(FATAL_ERROR "Should not fail to execute the installer program: ${RES}")
-  endif()
-
   _detach_qt_online_installer()
 
   if(CMAKE_SYSTEM_NAME STREQUAL Darwin)
@@ -75,6 +67,34 @@ if("Attach and detach Qt online installer" MATCHES ${TEST_MATCHES})
     if(NOT DEFINED QT_ONLINE_INSTALLER_PROGRAM)
       message(FATAL_ERROR "The 'QT_ONLINE_INSTALLER_PROGRAM' variable should be defined")
     endif()
+  endif()
+endif()
+
+
+if("Execute Qt online installer" MATCHES ${TEST_MATCHES})
+  math(EXPR TEST_COUNT "${TEST_COUNT} + 1")
+
+  _download_qt_online_installer()
+  if(DEFINED QT_ONLINE_INSTALLER_IMAGE)
+    _attach_qt_online_installer()
+  endif()
+
+  if(NOT DEFINED QT_ONLINE_INSTALLER_PROGRAM)
+    message(FATAL_ERROR "The 'QT_ONLINE_INSTALLER_PROGRAM' variable should be defined")
+  elseif(NOT EXISTS ${QT_ONLINE_INSTALLER_PROGRAM})
+    message(FATAL_ERROR "The installer program should exist at '${QT_ONLINE_INSTALLER_PROGRAM}'")
+  endif()
+
+  execute_process(
+    COMMAND ${QT_ONLINE_INSTALLER_PROGRAM} --version
+    RESULT_VARIABLE RES
+  )
+  if(NOT RES EQUAL 0)
+    message(FATAL_ERROR "Should not fail to execute the installer program: ${RES}")
+  endif()
+
+  if(DEFINED QT_ONLINE_INSTALLER_VOLUME)
+    _detach_qt_online_installer()
   endif()
 endif()
 
