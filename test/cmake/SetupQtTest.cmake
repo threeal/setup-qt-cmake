@@ -101,6 +101,12 @@ if("Set up the latest version of Qt" MATCHES ${TEST_MATCHES})
   math(EXPR TEST_COUNT "${TEST_COUNT} + 1")
 
   setup_qt()
+
+  if(NOT DEFINED QT_CMAKE_PREFIX_PATH)
+    message(FATAL_ERROR "The 'QT_CMAKE_PREFIX_PATH' variable should be defined")
+  elseif(NOT EXISTS ${QT_CMAKE_PREFIX_PATH})
+    message(FATAL_ERROR "The CMake prefix path of the Qt framework should exist at '${QT_CMAKE_PREFIX_PATH}'")
+  endif()
 endif()
 
 if(TEST_COUNT LESS_EQUAL 0)
