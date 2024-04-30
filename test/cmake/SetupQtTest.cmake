@@ -70,7 +70,6 @@ if("Attach and detach Qt online installer" MATCHES ${TEST_MATCHES})
   endif()
 endif()
 
-
 if("Execute Qt online installer" MATCHES ${TEST_MATCHES})
   math(EXPR TEST_COUNT "${TEST_COUNT} + 1")
 
@@ -95,6 +94,18 @@ if("Execute Qt online installer" MATCHES ${TEST_MATCHES})
 
   if(DEFINED QT_ONLINE_INSTALLER_VOLUME)
     _detach_qt_online_installer()
+  endif()
+endif()
+
+if("Set up the latest version of Qt" MATCHES ${TEST_MATCHES})
+  math(EXPR TEST_COUNT "${TEST_COUNT} + 1")
+
+  setup_qt()
+
+  if(NOT DEFINED QT_CMAKE_PREFIX_PATH)
+    message(FATAL_ERROR "The 'QT_CMAKE_PREFIX_PATH' variable should be defined")
+  elseif(NOT EXISTS ${QT_CMAKE_PREFIX_PATH})
+    message(FATAL_ERROR "The CMake prefix path of the Qt framework should exist at '${QT_CMAKE_PREFIX_PATH}'")
   endif()
 endif()
 
