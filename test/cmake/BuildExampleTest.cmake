@@ -1,19 +1,10 @@
-# Matches everything if not defined
-if(NOT TEST_MATCHES)
-  set(TEST_MATCHES ".*")
-endif()
-
-set(TEST_COUNT 0)
-
 file(
   DOWNLOAD https://threeal.github.io/git-checkout-cmake/v1.0.0 GitCheckout.cmake
   EXPECTED_MD5 3f49e8e2318773971d21adb98aa24470
 )
 include(GitCheckout.cmake)
 
-if("Build analogclock example" MATCHES ${TEST_MATCHES})
-  math(EXPR TEST_COUNT "${TEST_COUNT} + 1")
-
+function(test_build_analogclock_example)
   if(NOT EXISTS qtbase)
     git_checkout(
       https://github.com/qt/qtbase
@@ -42,8 +33,12 @@ if("Build analogclock example" MATCHES ${TEST_MATCHES})
   if(NOT RES EQUAL 0)
     message(FATAL_ERROR "Failed to build analogclock project")
   endif()
+endfunction()
+
+if(NOT DEFINED TEST_COMMAND)
+  message(FATAL_ERROR "The 'TEST_COMMAND' variable should be defined")
+elseif(NOT COMMAND test_${TEST_COMMAND})
+  message(FATAL_ERROR "Unable to find a command named 'test_${TEST_COMMAND}'")
 endif()
 
-if(TEST_COUNT LESS_EQUAL 0)
-  message(FATAL_ERROR "Nothing to test with: ${TEST_MATCHES}")
-endif()
+cmake_language(CALL test_${TEST_COMMAND})
