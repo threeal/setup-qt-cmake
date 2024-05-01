@@ -13,7 +13,7 @@ endfunction()
 
 add_cmake_test(
   cmake/BuildExampleTest.cmake
-  "Build analogclock example"
+  "Build rasterwindow example"
 )
 
 add_cmake_test(
