@@ -3,6 +3,31 @@
 
 include_guard(GLOBAL)
 
+function(_install_missing_deps PROGRAM)
+  find_program(READELF_PROGRAM readelf)
+  if(READELF_PROGRAM STREQUAL READELF_PROGRAM-NOTFOUND)
+    message(
+      AUTHOR_WARNING
+      "Could not find the 'readelf' program required to determine the dependencies of '${PROGRAM}', skipping dependencies installation"
+    )
+    return()
+  endif()
+
+  execute_process(
+    COMMAND ${READELF_PROGRAM} -d ${PROGRAM}
+    RESULT_VARIABLE RES
+    OUTPUT_VARIABLE OUT
+  )
+  if(NOT RES EQUAL 0)
+    message(
+      AUTHOR_WARNING
+      "Failed to determine the dependencies of '${PROGRAM}', skipping dependencies installation (${RES})"
+    )
+  endif()
+
+  message(FATAL_ERROR ${OUT})
+endfunction()
+
 # Downloads the Qt online installer to a build directory.
 #
 # If the downloaded file is a DMG image, this function will set the 'QT_ONLINE_INSTALLER_IMAGE' variable to the
@@ -38,6 +63,11 @@ function(_download_qt_online_installer)
       CHMOD ${INSTALLER_PATH}
       PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
     )
+
+    if(INSTALLER_LAST_EXT STREQUAL .run)
+      _install_missing_deps("${INSTALLER_PATH}")
+    endif()
+
     set(QT_ONLINE_INSTALLER_PROGRAM ${INSTALLER_PATH} PARENT_SCOPE)
   endif()
 endfunction()
