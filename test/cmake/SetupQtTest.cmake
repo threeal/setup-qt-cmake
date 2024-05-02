@@ -1,15 +1,6 @@
-# Matches everything if not defined
-if(NOT TEST_MATCHES)
-  set(TEST_MATCHES ".*")
-endif()
-
 include(SetupQt)
 
-set(TEST_COUNT 0)
-
-if("Download Qt online installer" MATCHES ${TEST_MATCHES})
-  math(EXPR TEST_COUNT "${TEST_COUNT} + 1")
-
+function(test_download_qt_online_installer)
   _download_qt_online_installer()
 
   if(CMAKE_SYSTEM_NAME STREQUAL Darwin)
@@ -29,11 +20,9 @@ if("Download Qt online installer" MATCHES ${TEST_MATCHES})
       message(FATAL_ERROR "The 'QT_ONLINE_INSTALLER_IMAGE' variable should not be defined")
     endif()
   endif()
-endif()
+endfunction()
 
-if("Attach and detach Qt online installer" MATCHES ${TEST_MATCHES})
-  math(EXPR TEST_COUNT "${TEST_COUNT} + 1")
-
+function(test_attach_and_detach_qt_online_installer)
   _download_qt_online_installer()
   _attach_qt_online_installer()
 
@@ -68,12 +57,10 @@ if("Attach and detach Qt online installer" MATCHES ${TEST_MATCHES})
       message(FATAL_ERROR "The 'QT_ONLINE_INSTALLER_PROGRAM' variable should be defined")
     endif()
   endif()
-endif()
+endfunction()
 
 
-if("Execute Qt online installer" MATCHES ${TEST_MATCHES})
-  math(EXPR TEST_COUNT "${TEST_COUNT} + 1")
-
+function(test_execute_qt_online_installer)
   _download_qt_online_installer()
   if(DEFINED QT_ONLINE_INSTALLER_IMAGE)
     _attach_qt_online_installer()
@@ -96,8 +83,12 @@ if("Execute Qt online installer" MATCHES ${TEST_MATCHES})
   if(DEFINED QT_ONLINE_INSTALLER_VOLUME)
     _detach_qt_online_installer()
   endif()
+endfunction()
+
+if(NOT DEFINED TEST_COMMAND)
+  message(FATAL_ERROR "The 'TEST_COMMAND' variable should be defined")
+elseif(NOT COMMAND test_${TEST_COMMAND})
+  message(FATAL_ERROR "Unable to find a command named 'test_${TEST_COMMAND}'")
 endif()
 
-if(TEST_COUNT LESS_EQUAL 0)
-  message(FATAL_ERROR "Nothing to test with: ${TEST_MATCHES}")
-endif()
+cmake_language(CALL test_${TEST_COMMAND})
