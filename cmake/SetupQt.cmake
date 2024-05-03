@@ -26,19 +26,19 @@ function(_download_qt_online_installer)
   file(
     DOWNLOAD
     https://d13lb3tujbc8s0.cloudfront.net/onlineinstallers/${INSTALLER_NAME}
-    ${INSTALLER_PATH}
-    EXPECTED_MD5 ${INSTALLER_HASH}
+    "${INSTALLER_PATH}"
+    EXPECTED_MD5 "${INSTALLER_HASH}"
   )
 
-  get_filename_component(INSTALLER_LAST_EXT ${INSTALLER_PATH} LAST_EXT)
+  get_filename_component(INSTALLER_LAST_EXT "${INSTALLER_PATH}" LAST_EXT)
   if(INSTALLER_LAST_EXT STREQUAL .dmg)
-    set(QT_ONLINE_INSTALLER_IMAGE ${INSTALLER_PATH} PARENT_SCOPE)
+    set(QT_ONLINE_INSTALLER_IMAGE "${INSTALLER_PATH}" PARENT_SCOPE)
   else()
     file(
-      CHMOD ${INSTALLER_PATH}
+      CHMOD "${INSTALLER_PATH}"
       PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
     )
-    set(QT_ONLINE_INSTALLER_PROGRAM ${INSTALLER_PATH} PARENT_SCOPE)
+    set(QT_ONLINE_INSTALLER_PROGRAM "${INSTALLER_PATH}" PARENT_SCOPE)
   endif()
 endfunction()
 
@@ -53,17 +53,17 @@ function(_attach_qt_online_installer)
     return()
   endif()
 
-  get_filename_component(IMAGE_NAME ${QT_ONLINE_INSTALLER_IMAGE} NAME_WLE)
+  get_filename_component(IMAGE_NAME "${QT_ONLINE_INSTALLER_IMAGE}" NAME_WLE)
   set(VOLUME_PATH /Volumes/${IMAGE_NAME})
 
-  if(NOT EXISTS ${VOLUME_PATH})
+  if(NOT EXISTS "${VOLUME_PATH}")
     find_program(HDIUTIL_PROGRAM hdiutil)
     if(HDIUTIL_PROGRAM STREQUAL HDIUTIL_PROGRAM-NOTFOUND)
       message(FATAL_ERROR "Could not find the 'hdiutil' program required to attach the Qt online installer")
     endif()
 
     execute_process(
-      COMMAND ${HDIUTIL_PROGRAM} attach ${QT_ONLINE_INSTALLER_IMAGE}
+      COMMAND "${HDIUTIL_PROGRAM}" attach "${QT_ONLINE_INSTALLER_IMAGE}"
       RESULT_VARIABLE RES
     )
     if(NOT RES EQUAL 0)
@@ -74,7 +74,7 @@ function(_attach_qt_online_installer)
     endif()
   endif()
 
-  set(QT_ONLINE_INSTALLER_VOLUME ${VOLUME_PATH} PARENT_SCOPE)
+  set(QT_ONLINE_INSTALLER_VOLUME "${VOLUME_PATH}" PARENT_SCOPE)
   set(QT_ONLINE_INSTALLER_PROGRAM ${VOLUME_PATH}/${IMAGE_NAME}.app/Contents/MacOS/${IMAGE_NAME} PARENT_SCOPE)
 endfunction()
 
@@ -88,14 +88,14 @@ function(_detach_qt_online_installer)
     return()
   endif()
 
-  if(EXISTS ${QT_ONLINE_INSTALLER_VOLUME})
+  if(EXISTS "${QT_ONLINE_INSTALLER_VOLUME}")
     find_program(HDIUTIL_PROGRAM hdiutil)
     if(HDIUTIL_PROGRAM STREQUAL HDIUTIL_PROGRAM-NOTFOUND)
       message(FATAL_ERROR "Could not find the 'hdiutil' program required to detach the Qt online installer")
     endif()
 
     execute_process(
-      COMMAND ${HDIUTIL_PROGRAM} detach ${QT_ONLINE_INSTALLER_VOLUME}
+      COMMAND "${HDIUTIL_PROGRAM}" detach "${QT_ONLINE_INSTALLER_VOLUME}"
       RESULT_VARIABLE RES
     )
     if(NOT RES EQUAL 0)

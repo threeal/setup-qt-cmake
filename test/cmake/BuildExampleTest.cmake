@@ -15,7 +15,7 @@ function(test_build_analogclock_example)
 
   message(STATUS "Reconfiguring analogclock project")
   execute_process(
-    COMMAND ${CMAKE_COMMAND}
+    COMMAND "${CMAKE_COMMAND}"
       -B build/analogclock
       --fresh
       qtbase/examples/gui/analogclock
@@ -27,7 +27,7 @@ function(test_build_analogclock_example)
 
   message(STATUS "Building analogclock project")
   execute_process(
-    COMMAND ${CMAKE_COMMAND} --build build/analogclock
+    COMMAND "${CMAKE_COMMAND}" --build build/analogclock
     RESULT_VARIABLE RES
   )
   if(NOT RES EQUAL 0)
