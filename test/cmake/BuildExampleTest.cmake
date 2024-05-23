@@ -4,7 +4,7 @@ file(
 )
 include(GitCheckout.cmake)
 
-function(test_build_analogclock_example)
+function("Build analogclock example")
   if(NOT EXISTS qtbase)
     git_checkout(
       https://github.com/qt/qtbase
@@ -37,8 +37,8 @@ endfunction()
 
 if(NOT DEFINED TEST_COMMAND)
   message(FATAL_ERROR "The 'TEST_COMMAND' variable should be defined")
-elseif(NOT COMMAND test_${TEST_COMMAND})
-  message(FATAL_ERROR "Unable to find a command named 'test_${TEST_COMMAND}'")
+elseif(NOT COMMAND "${TEST_COMMAND}")
+  message(FATAL_ERROR "Unable to find a command named '${TEST_COMMAND}'")
 endif()
 
-cmake_language(CALL test_${TEST_COMMAND})
+cmake_language(CALL "${TEST_COMMAND}")
