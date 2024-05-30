@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 include(SetupQt)
 
-function(test_download_qt_online_installer)
+function("Download Qt online installer")
   _download_qt_online_installer()
 
   if(CMAKE_SYSTEM_NAME STREQUAL Darwin)
@@ -24,7 +24,7 @@ function(test_download_qt_online_installer)
   endif()
 endfunction()
 
-function(test_attach_and_detach_qt_online_installer)
+function("Attach and detach Qt online installer")
   _download_qt_online_installer()
   _attach_qt_online_installer()
 
@@ -61,8 +61,7 @@ function(test_attach_and_detach_qt_online_installer)
   endif()
 endfunction()
 
-
-function(test_execute_qt_online_installer)
+function("Execute Qt online installer")
   _download_qt_online_installer()
   if(DEFINED QT_ONLINE_INSTALLER_IMAGE)
     _attach_qt_online_installer()
@@ -87,10 +86,4 @@ function(test_execute_qt_online_installer)
   endif()
 endfunction()
 
-if(NOT DEFINED TEST_COMMAND)
-  message(FATAL_ERROR "The 'TEST_COMMAND' variable should be defined")
-elseif(NOT COMMAND test_${TEST_COMMAND})
-  message(FATAL_ERROR "Unable to find a command named 'test_${TEST_COMMAND}'")
-endif()
-
-cmake_language(CALL test_${TEST_COMMAND})
+cmake_language(CALL "${TEST_COMMAND}")
