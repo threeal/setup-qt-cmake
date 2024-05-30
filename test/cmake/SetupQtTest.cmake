@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.5)
+
 include(SetupQt)
 
 function(test_download_qt_online_installer)

@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.5)
+
 file(
   DOWNLOAD https://threeal.github.io/git-checkout-cmake/v1.0.0 GitCheckout.cmake
   EXPECTED_MD5 3f49e8e2318773971d21adb98aa24470
