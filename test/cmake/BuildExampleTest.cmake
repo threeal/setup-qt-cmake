@@ -21,13 +21,15 @@ function("Build analogclock example")
     )
   endif()
 
-  message(STATUS "Reconfiguring analogclock project")
-  assert_execute_process(
-    "${CMAKE_COMMAND}" -B build/analogclock --fresh
-      qtbase/examples/gui/analogclock)
+  section("reconfigure analogclock project")
+    assert_execute_process(
+      "${CMAKE_COMMAND}" -B build/analogclock --fresh
+        qtbase/examples/gui/analogclock)
+  endsection()
 
-  message(STATUS "Building analogclock project")
-  assert_execute_process("${CMAKE_COMMAND}" --build build/analogclock)
+  section("build analogclock project")
+    assert_execute_process("${CMAKE_COMMAND}" --build build/analogclock)
+  endsection()
 endfunction()
 
 cmake_language(CALL "${TEST_COMMAND}")
