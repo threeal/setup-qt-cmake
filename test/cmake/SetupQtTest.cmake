@@ -7,7 +7,6 @@ file(
 include(${CMAKE_BINARY_DIR}/Assertion.cmake)
 
 find_package(SetupQt REQUIRED PATHS ${CMAKE_CURRENT_LIST_DIR}/../../cmake)
-include(SetupQt)
 
 function("Download Qt online installer")
   _download_qt_online_installer()
