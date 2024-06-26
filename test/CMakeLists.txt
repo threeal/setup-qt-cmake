@@ -4,7 +4,6 @@ function(add_cmake_test FILE)
     add_test(
       NAME "${ARGV${I}}"
       COMMAND "${CMAKE_COMMAND}"
-        -D CMAKE_MODULE_PATH=${CMAKE_MODULE_PATH}
         -D CMAKE_SYSTEM_NAME=${CMAKE_SYSTEM_NAME}
         -D "TEST_COMMAND=${ARGV${I}}"
         -P ${CMAKE_CURRENT_SOURCE_DIR}/${FILE}
