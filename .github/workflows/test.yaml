@@ -25,7 +25,7 @@ jobs:
       - name: Configure Project
         uses: threeal/cmake-action@v1.3.0
         with:
-          options: BUILD_TESTING=ON
+          options: SETUP_QT_ENABLE_TESTS=ON
 
       - name: Test Project
         uses: threeal/ctest-action@v1.0.0
