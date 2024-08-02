@@ -12,7 +12,7 @@ file(
 )
 include(GitCheckout.cmake)
 
-function("Build analogclock example")
+section("it should build analogclock example")
   if(NOT EXISTS qtbase)
     git_checkout(
       https://github.com/qt/qtbase
@@ -30,6 +30,4 @@ function("Build analogclock example")
   section("build analogclock project")
     assert_execute_process("${CMAKE_COMMAND}" --build build/analogclock)
   endsection()
-endfunction()
-
-cmake_language(CALL "${TEST_COMMAND}")
+endsection()
