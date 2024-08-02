@@ -16,7 +16,18 @@ include(cmake/SetupQt.cmake)
 
 if(SETUP_QT_ENABLE_TESTS)
   enable_testing()
-  add_subdirectory(test)
+
+  add_test(
+    NAME build_example.cmake
+    COMMAND "${CMAKE_COMMAND}"
+      -D CMAKE_SYSTEM_NAME=${CMAKE_SYSTEM_NAME}
+      -P ${CMAKE_CURRENT_SOURCE_DIR}/test/build_example.cmake)
+
+  add_test(
+    NAME setup_qt.cmake
+    COMMAND "${CMAKE_COMMAND}"
+      -D CMAKE_SYSTEM_NAME=${CMAKE_SYSTEM_NAME}
+      -P ${CMAKE_CURRENT_SOURCE_DIR}/test/setup_qt.cmake)
 endif()
 
 if(SETUP_QT_ENABLE_INSTALL)

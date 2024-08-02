@@ -6,7 +6,7 @@ file(
   EXPECTED_MD5 1d8ec589d6cc15772581bf77eb3873ff)
 include(${CMAKE_BINARY_DIR}/Assertion.cmake)
 
-find_package(SetupQt REQUIRED PATHS ${CMAKE_CURRENT_LIST_DIR}/../../cmake)
+find_package(SetupQt REQUIRED PATHS ${CMAKE_CURRENT_LIST_DIR}/../cmake)
 
 section("it should download Qt online installer")
   _download_qt_online_installer()
