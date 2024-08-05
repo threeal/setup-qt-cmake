@@ -16,7 +16,15 @@ include(cmake/SetupQt.cmake)
 
 if(SETUP_QT_ENABLE_TESTS)
   enable_testing()
-  add_subdirectory(test)
+
+  file(
+    DOWNLOAD https://github.com/threeal/assertion-cmake/releases/download/v1.0.0/Assertion.cmake
+      ${CMAKE_BINARY_DIR}/Assertion.cmake
+    EXPECTED_MD5 1d8ec589d6cc15772581bf77eb3873ff)
+  include(${CMAKE_BINARY_DIR}/Assertion.cmake)
+
+  assertion_add_test(test/build_example.cmake)
+  assertion_add_test(test/setup_qt.cmake)
 endif()
 
 if(SETUP_QT_ENABLE_INSTALL)
