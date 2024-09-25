@@ -7,11 +7,11 @@ on:
 jobs:
   test-project:
     name: Test Project
-    runs-on: ${{ matrix.os }}-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [windows, ubuntu, macos]
+        os: [windows-2022, ubuntu-22.04, macos-14]
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.7
