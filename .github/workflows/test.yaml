@@ -23,7 +23,7 @@ jobs:
           cache: true
 
       - name: Configure Project
-        uses: threeal/cmake-action@v2.0.0
+        uses: threeal/cmake-action@v2.1.0
         with:
           options: SETUP_QT_ENABLE_TESTS=ON
           run-build: false
